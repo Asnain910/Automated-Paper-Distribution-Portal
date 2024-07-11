@@ -1,0 +1,59 @@
+from flask import Flask, request, render_template_string, redirect, url_for
+from werkzeug.utils import secure_filename
+import pandas as pd
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import os
+from random import sample
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template_string(open('form.html').read())
+
+@app.route('/submit', methods=['POST'])
+def submit():
+    form_data = request.form.to_dict()
+    file = request.files['file']
+    if file:
+        filename = os.path.join('uploads', secure_filename(file.filename))
+        file.save(filename)
+
+        # Read CSV, randomly select 3 faculty
+        df = pd.read_csv(filename)
+        selected_faculty = df.sample(n=3)
+
+        # Construct email body from form data
+        email_body = "Form Details:\n" + "\n".join([f"{key}: {value}" for key, value in form_data.items()])
+        
+        send_emails(selected_faculty['email'].tolist(), email_body)
+
+    return 'Emails sent successfully!'
+
+def send_emails(emails, content):
+    sender_email = "asnainsdq12@gmail.com"
+    password = "xsmtpsib-f34776e5b8573841fb424a70ae118461f4bb019951c4c94d9a02d05276fa925c-nDaPFTOGw5Jmq6pv"
+    smtp_server = "smtp-relay.sendinblue.com"
+    port = 587  # For starttls
+
+    message = MIMEMultipart("alternative")
+    message["Subject"] = "Faculty Notification"
+    message["From"] = sender_email
+
+    part = MIMEText(content, "plain")
+    message.attach(part)
+
+    # Login to server and send the email
+    server = smtplib.SMTP(smtp_server, port)
+    server.starttls()
+    server.login(sender_email, password)
+    for email in emails:
+        message["To"] = email
+        server.sendmail(sender_email, email, message.as_string())
+
+    server.quit()
+
+if __name__ == '__main__':
+    app.run(debug=True)

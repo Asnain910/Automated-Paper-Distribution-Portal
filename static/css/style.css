@@ -1,0 +1,103 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding-top: 20px; /* Adjust top padding */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center-align items horizontally */
+    min-height: 100vh; /* Full viewport height */
+}
+
+/* Styling for the form */
+form {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: clamp(300px, 100%, 600px);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    appearance: none;
+    cursor: pointer;
+}
+
+input[type="file"] {
+    border: 1px solid #ccc;
+    display: block;
+    padding: 8px;
+    margin-top: 10px;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 20px 0;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Styling the file input more attractively */
+input[type="file"] {
+    cursor: pointer;
+}
+
+/* Handling responsiveness */
+@media (max-width: 768px) {
+    form {
+        width: 90%;
+        padding: 20px;
+    }
+}
+
+.Image {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+footer {
+    background-color: #f2f2f249;
+    text-align: center;
+    padding: 10px;
+  }
+
+/* Style for form headers */
+h2 {
+    width: 100%; /* Full width */
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px; /* Space between the heading and the form */
+}
+
+
